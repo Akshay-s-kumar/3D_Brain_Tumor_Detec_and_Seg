@@ -1,65 +1,36 @@
 # 3D_Brain_Tumor_Detec_and_Seg
 
-Brain Tumor Detection and Segmentation
+Brain Tumor Segmentation using 3D CNN with Frequency-Aware Learning
+This repository contains the implementation of a 3D Convolutional Neural Network (3D CNN) with frequency-aware learning for brain tumor segmentation using the BraTS 2021 dataset.
 
-Overview
+Table of Contents
+Introduction
 
-    This project aims to develop an automated deep learning pipeline for 3D brain tumor detection, segmentation, and visualization using MRI scans. The approach leverages advanced 3D Convolutional Neural Networks (CNNs) for accurate classification and segmentation, ensuring precise tumor localization and analysis.
+Dataset
 
-Objectives
+Setup
 
-    Detect brain tumors from 3D MRI scans using deep learning.
+Code Overview
 
-    Segment tumors to identify their exact size, shape, and location.
+Results
 
-    Provide interactive 3D visualizations for better interpretability by doctors.
+Future Work
 
-    Optimize computational efficiency by using state-of-the-art models.
+References
 
-Workflow
+Introduction
+The goal of this project is to develop a deep learning model for segmenting brain tumors from 3D MRI scans. The model uses a 3D CNN architecture with frequency-aware learning to capture both spatial and frequency-domain features for improved segmentation accuracy.
 
-    Data Acquisition: Collect MRI scans in DICOM or NIfTI format.
+Dataset
+The dataset used is the BraTS 2021 dataset, which contains multi-modal MRI scans (T1, T1ce, T2, FLAIR) and corresponding segmentation masks. The segmentation masks include the following labels:
 
-    Preprocessing: Apply noise reduction, intensity normalization, and image resizing.
+0: Background (normal tissue)
 
-    Tumor Detection: Use 3D CNNs (ResNet-3D or EfficientNet-3D) to classify tumor presence.
+1: Necrotic and non-enhancing tumor core (NCR/NET)
 
-    Segmentation: Apply 3D U-Net or V-Net for voxel-level tumor segmentation.
+2: Peritumoral edema (ED)
 
-    3D Reconstruction: Utilize techniques like VoxelMorph or PointNet for visualization.
+4: Enhancing tumor (ET)
 
-    Visualization: Generate interactive 3D images using Matplotlib, Mayavi, or Plotly.
+Each MRI scan is a 3D volume of size (240, 240, 155).
 
-    Evaluation: Measure accuracy using Dice Similarity Coefficient (DSC) and IoU.
-
-Deep Learning Models Used
-
-    ResNet-3D / EfficientNet-3D (Tumor Classification) - CNN-based models for detecting tumors.
-
-    3D U-Net / V-Net (Segmentation) - Extract tumor regions precisely.
-
-    VoxelMorph / PointNet (3D Reconstruction) - Create 3D tumor representations.
-
-Research Gap Addressed
-
-    Most Transformer-based methods for brain tumor segmentation focus on 2D MRI slices, missing crucial 3D volumetric details and requiring high computational resources. Our project directly works with full 3D MRI volumes, preserving spatial information while leveraging CNNs to achieve high accuracy with lower computational cost.
-
-Expected Outcome
-
-    More accurate tumor segmentation with 3D volumetric analysis.
-
-    Better visualization for doctors to interactively explore the tumor structure.
-
-    A deep learning pipeline that can be integrated into medical imaging workflows.
-
-Next Steps
-
-    Collect and preprocess MRI datasets.
-
-    Train the 3D CNN models for tumor detection.
-
-    Develop the segmentation pipeline using 3D U-Net.
-
-    Integrate visualization tools for interactive 3D analysis.
-
-    Evaluate performance and refine the model.
