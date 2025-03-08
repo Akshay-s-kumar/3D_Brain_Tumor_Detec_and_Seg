@@ -18,19 +18,60 @@ Future Work
 
 References
 
-Introduction
-The goal of this project is to develop a deep learning model for segmenting brain tumors from 3D MRI scans. The model uses a 3D CNN architecture with frequency-aware learning to capture both spatial and frequency-domain features for improved segmentation accuracy.
+=============================================================================
+1️⃣ Preprocessing
 
-Dataset
-The dataset used is the BraTS 2021 dataset, which contains multi-modal MRI scans (T1, T1ce, T2, FLAIR) and corresponding segmentation masks. The segmentation masks include the following labels:
+Convert the uploaded MRI scan to match BraTS format (e.g., rescale, normalize).
+Ensure the scan includes the same modalities (T1, T2, FLAIR, T1-Gd).
 
-0: Background (normal tissue)
+::
+1. Problem Definition
+Objective 1: Classify brain tumors as Benign or Malignant.
+Objective 2: Classify glioma subtypes (e.g., GBM, LGG).
+Input: Multi-modal MRI scans (T1, T1c, T2, FLAIR).
+Output: Classification labels (Benign/Malignant, Glioma Subtypes).
 
-1: Necrotic and non-enhancing tumor core (NCR/NET)
+2. Data Preparation
+Dataset Structure
+The dataset contains NIfTI files for each patient:
+T1: Native T1-weighted MRI.
+T1c: Post-contrast T1-weighted MRI.
+T2: T2-weighted MRI.
+FLAIR: T2-FLAIR MRI.
+Seg: Ground truth segmentation masks (labels: 1 = NCR, 2 = ED, 4 = ET).
 
-2: Peritumoral edema (ED)
+Steps
+1: Load NIfTI Files:
+Use a library like nibabel to load .nii.gz files into numpy arrays.
+Each MRI modality will be a 3D volume (e.g., 240x240x155).
+2: Preprocessing:
+Normalization: Normalize each modality to have zero mean and unit variance.
+Resampling: Ensure all modalities are aligned and have the same resolution (1 mm³).
+Skull Stripping: Use the provided skull-stripped data.
+Cropping: Crop the volumes to remove unnecessary background regions.
+Data Augmentation: Apply augmentations like rotation, flipping, and scaling to increase dataset diversity.
+3: Label Preparation:
+Benign vs. Malignant:
+Use the segmentation masks (seg.nii.gz) to determine tumor type.
+For example, if the tumor has a significant enhancing region (label 4), classify it as malignant.
+Glioma Subtypes:
+Use metadata or external labels (if available) to classify gliomas into subtypes like GBM or LGG.
+4: Dataset Splitting:
+Split the dataset into training, validation, and test sets (e.g., 70% training, 15% validation, 15% testing).
 
-4: Enhancing tumor (ET)
+2️⃣ Model Inference
 
-Each MRI scan is a 3D volume of size (240, 240, 155).
+The trained segmentation model predicts tumor presence.
+Generates a segmentation mask with labels (1, 2, 4).
 
+3️⃣ Overlay Visualization
+
+The output mask is overlaid on the MRI scan for easy interpretation.
+Different colors highlight ET, ED, and NCR regions.
+=====================================================================
+
+Deployment Possibilities
+
+Web App (Flask/Django + React/Streamlit) → Users upload scans & see predictions.
+Cloud API (FastAPI/TensorFlow Serving) → Process MRI scans via REST API.
+Mobile App (TensorFlow Lite) → Scan MRI reports via phone.
